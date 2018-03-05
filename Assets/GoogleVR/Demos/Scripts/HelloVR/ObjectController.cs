@@ -13,9 +13,10 @@
 // limitations under the License.
 
 namespace GoogleVR.HelloVR {
-  using UnityEngine;
+    using System.Collections;
+    using UnityEngine;
 
-  [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider))]
   public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
     private Renderer renderer;
@@ -29,11 +30,27 @@ namespace GoogleVR.HelloVR {
       SetGazedAt(false);
     }
 
+    IEnumerator Test()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2.5f);
+            Debug.Log("Watching");
+            TeleportRandomly();
+            Debug.Log("Poof");
+        }
+    }
+
     public void SetGazedAt(bool gazedAt) {
-      if (inactiveMaterial != null && gazedAtMaterial != null) {
-        renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
-        return;
-      }
+        if (gazedAt){
+            StartCoroutine("Test");
+        }else{
+            StopCoroutine("Test");
+        }
+        if (inactiveMaterial != null && gazedAtMaterial != null) {
+            renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;  
+            return;
+        }
     }
 
     public void Reset() {
