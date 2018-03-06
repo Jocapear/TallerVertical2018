@@ -22,7 +22,7 @@ public class GvrReticlePointer : GvrBasePointer {
   public const float RETICLE_MIN_INNER_ANGLE = 0.0f;
 
   /// Minimum outer angle of the reticle (in degrees).
-  public const float RETICLE_MIN_OUTER_ANGLE = 0.5f;
+  public const float RETICLE_MIN_OUTER_ANGLE = 0.8f;
 
   /// Angle at which to expand the reticle when intersecting with an object (in degrees).
   public const float RETICLE_GROWTH_ANGLE = 1.5f;
@@ -94,8 +94,7 @@ public class GvrReticlePointer : GvrBasePointer {
   }
 
   public void UpdateDiameters() {
-    ReticleDistanceInMeters =
-      Mathf.Clamp(ReticleDistanceInMeters, RETICLE_DISTANCE_MIN, maxReticleDistance);
+    ReticleDistanceInMeters = Mathf.Clamp(ReticleDistanceInMeters, RETICLE_DISTANCE_MIN, maxReticleDistance);
 
     if (ReticleInnerAngle < RETICLE_MIN_INNER_ANGLE) {
       ReticleInnerAngle = RETICLE_MIN_INNER_ANGLE;
@@ -108,13 +107,11 @@ public class GvrReticlePointer : GvrBasePointer {
     float inner_half_angle_radians = Mathf.Deg2Rad * ReticleInnerAngle * 0.5f;
     float outer_half_angle_radians = Mathf.Deg2Rad * ReticleOuterAngle * 0.5f;
 
-    float inner_diameter = 2.0f * Mathf.Tan(inner_half_angle_radians);
-    float outer_diameter = 2.0f * Mathf.Tan(outer_half_angle_radians);
+    float inner_diameter = 0.0f * Mathf.Tan(inner_half_angle_radians);
+    float outer_diameter = 1.1f * Mathf.Tan(outer_half_angle_radians);
 
-    ReticleInnerDiameter =
-      Mathf.Lerp(ReticleInnerDiameter, inner_diameter, Time.deltaTime * reticleGrowthSpeed);
-    ReticleOuterDiameter =
-      Mathf.Lerp(ReticleOuterDiameter, outer_diameter, Time.deltaTime * reticleGrowthSpeed);
+    ReticleInnerDiameter = Mathf.Lerp(ReticleInnerDiameter, inner_diameter, Time.deltaTime * (reticleGrowthSpeed - 0));
+    ReticleOuterDiameter = Mathf.Lerp(ReticleOuterDiameter, outer_diameter, Time.deltaTime * (reticleGrowthSpeed - 1));
 
     MaterialComp.SetFloat("_InnerDiameter", ReticleInnerDiameter * ReticleDistanceInMeters);
     MaterialComp.SetFloat("_OuterDiameter", ReticleOuterDiameter * ReticleDistanceInMeters);

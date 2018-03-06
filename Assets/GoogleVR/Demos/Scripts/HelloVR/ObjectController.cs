@@ -13,7 +13,8 @@
 // limitations under the License.
 
 namespace GoogleVR.HelloVR {
-  using UnityEngine;
+    using System.Collections;
+    using UnityEngine;
 
   [RequireComponent(typeof(Collider))]
   public class ObjectController : MonoBehaviour {
@@ -22,6 +23,7 @@ namespace GoogleVR.HelloVR {
 
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
+    public Material miGazedAtMaterial;
 
     void Start() {
       startingPosition = transform.localPosition;
@@ -29,7 +31,20 @@ namespace GoogleVR.HelloVR {
       SetGazedAt(false);
     }
 
+    public void Dragged(bool gazedAt)
+    {
+        renderer.material = gazedAt ? miGazedAtMaterial : gazedAtMaterial;
+    }
+
     public void SetGazedAt(bool gazedAt) {
+            if (gazedAt)
+            {
+                StartCoroutine("Stared");
+            }
+            else
+            {
+                StopCoroutine("Stared");
+            }
       if (inactiveMaterial != null && gazedAtMaterial != null) {
         renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
         return;
@@ -57,6 +72,8 @@ namespace GoogleVR.HelloVR {
     }
 
     public void TeleportRandomly() {
+
+      Debug.Log("Hola");
       // Pick a random sibling, move them somewhere random, activate them,
       // deactivate ourself.
       int sibIdx = transform.GetSiblingIndex();
@@ -79,6 +96,15 @@ namespace GoogleVR.HelloVR {
       randomSib.SetActive(true);
       gameObject.SetActive(false);
       SetGazedAt(false);
+    }
+
+    IEnumerator Stared()
+    {
+            while (true)
+            {
+                yield return new WaitForSeconds(3);
+                TeleportRandomly();
+            }           
     }
   }
 }
