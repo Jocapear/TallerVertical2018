@@ -32,7 +32,7 @@ public class ScreenController : MonoBehaviour {
 
     public void answerLeft()
     {
-        score--;
+        score-- ;
         changeQuestion();
     }
 
