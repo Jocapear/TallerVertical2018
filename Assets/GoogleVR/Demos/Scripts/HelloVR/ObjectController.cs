@@ -13,23 +13,36 @@
 // limitations under the License.
 
 namespace GoogleVR.HelloVR {
-  using UnityEngine;
-
-  [RequireComponent(typeof(Collider))]
-  public class ObjectController : MonoBehaviour {
+    using System.Collections;
+    using UnityEngine;
+    [RequireComponent(typeof(Collider))]
+    public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
     private Renderer renderer;
-
+    public GameObject player;
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
+    public Material miGazedAtMaterial;
 
     void Start() {
       startingPosition = transform.localPosition;
       renderer = GetComponent<Renderer>();
       SetGazedAt(false);
     }
+    public void Dragged(bool gazedAt)
+    {
+        renderer.material = gazedAt ? miGazedAtMaterial : gazedAtMaterial;
+    }
 
     public void SetGazedAt(bool gazedAt) {
+            if (gazedAt)
+            {
+                StartCoroutine("Stared");
+            }
+            else
+            {
+                StopCoroutine("Stared");
+            }
       if (inactiveMaterial != null && gazedAtMaterial != null) {
         renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
         return;
@@ -59,6 +72,8 @@ namespace GoogleVR.HelloVR {
     public void TeleportRandomly() {
       // Pick a random sibling, move them somewhere random, activate them,
       // deactivate ourself.
+      //Para teletransportar
+      player.transform.position = this.transform.position;
       int sibIdx = transform.GetSiblingIndex();
       int numSibs = transform.parent.childCount;
       sibIdx = (sibIdx + Random.Range(1, numSibs)) % numSibs;
@@ -79,6 +94,15 @@ namespace GoogleVR.HelloVR {
       randomSib.SetActive(true);
       gameObject.SetActive(false);
       SetGazedAt(false);
+      Debug.Log(this.transform.position.z);
+     }
+        IEnumerator Stared()
+    {
+            while (true)
+            {
+                yield return new WaitForSeconds(3);
+                TeleportRandomly();
+            }           
     }
   }
 }
