@@ -15,7 +15,8 @@ public class ScreenController : MonoBehaviour {
         questions.Add("Pregunta1");
         questions.Add("Pregunta2");
         questions.Add("Pregunta3");
-        
+        questions.Add("Pregunta4");
+
         textBox.text = questions[index].ToString();
 	}
 	
@@ -26,13 +27,13 @@ public class ScreenController : MonoBehaviour {
 
     public void answerRight()
     {
-        score++;
+        score--;
         changeQuestion();
     }
 
     public void answerLeft()
     {
-        score-- ;
+        score++;
         changeQuestion();
     }
 
