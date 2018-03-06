@@ -15,6 +15,8 @@
 namespace GoogleVR.HelloVR {
     using System.Collections;
     using UnityEngine;
+    using UnityEngine.UI;
+
     [RequireComponent(typeof(Collider))]
     public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
@@ -24,7 +26,7 @@ namespace GoogleVR.HelloVR {
     public Material gazedAtMaterial;
     public AudioClip narrationClip;
     public AudioSource narration;
-
+    public Text text;
     void Start() {
       startingPosition = transform.localPosition;
       renderer = GetComponent<Renderer>();
@@ -72,8 +74,11 @@ namespace GoogleVR.HelloVR {
 
       //Para teletransportar
       player.transform.position = this.transform.position;
+      text.text = player.transform.position.ToString() + " " + this.transform.position.ToString();
+      Debug.Log(text.text);
       //Play audio at telport
       narration.PlayOneShot(narrationClip);
+
       /*int sibIdx = transform.GetSiblingIndex();
       int numSibs = transform.parent.childCount;
       sibIdx = (sibIdx + Random.Range(1, numSibs)) % numSibs;
