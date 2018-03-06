@@ -425,7 +425,8 @@ MonoBehaviour:
   player: {fileID: 907292807}
   inactiveMaterial: {fileID: 2100000, guid: daad62324deb0cf448e5c805c8459bff, type: 2}
   gazedAtMaterial: {fileID: 2100000, guid: 0edec395166a3244592f3532c7ce794c, type: 2}
-  narration: {fileID: 0}
+  narrationClip: {fileID: 8300000, guid: f7491bc024d4e4f1f9a6dd7f09558029, type: 3}
+  narration: {fileID: 264567495}
 --- !u!64 &264567498
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1070,7 +1071,8 @@ MonoBehaviour:
   player: {fileID: 907292807}
   inactiveMaterial: {fileID: 2100000, guid: daad62324deb0cf448e5c805c8459bff, type: 2}
   gazedAtMaterial: {fileID: 2100000, guid: 0edec395166a3244592f3532c7ce794c, type: 2}
-  narration: {fileID: 0}
+  narrationClip: {fileID: 8300000, guid: f7491bc024d4e4f1f9a6dd7f09558029, type: 3}
+  narration: {fileID: 899501868}
 --- !u!64 &899501871
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1368,7 +1370,8 @@ MonoBehaviour:
   player: {fileID: 907292807}
   inactiveMaterial: {fileID: 2100000, guid: daad62324deb0cf448e5c805c8459bff, type: 2}
   gazedAtMaterial: {fileID: 2100000, guid: 0edec395166a3244592f3532c7ce794c, type: 2}
-  narration: {fileID: 0}
+  narrationClip: {fileID: 8300000, guid: f7491bc024d4e4f1f9a6dd7f09558029, type: 3}
+  narration: {fileID: 955127919}
 --- !u!114 &955127923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1851,7 +1854,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f7491bc024d4e4f1f9a6dd7f09558029, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2051,6 +2054,7 @@ MonoBehaviour:
   player: {fileID: 907292807}
   inactiveMaterial: {fileID: 2100000, guid: daad62324deb0cf448e5c805c8459bff, type: 2}
   gazedAtMaterial: {fileID: 2100000, guid: 0edec395166a3244592f3532c7ce794c, type: 2}
+  narrationClip: {fileID: 8300000, guid: f7491bc024d4e4f1f9a6dd7f09558029, type: 3}
   narration: {fileID: 1353409496}
 --- !u!64 &1353409499
 MeshCollider:
@@ -2360,7 +2364,8 @@ MonoBehaviour:
   player: {fileID: 907292807}
   inactiveMaterial: {fileID: 2100000, guid: daad62324deb0cf448e5c805c8459bff, type: 2}
   gazedAtMaterial: {fileID: 2100000, guid: 0edec395166a3244592f3532c7ce794c, type: 2}
-  narration: {fileID: 0}
+  narrationClip: {fileID: 8300000, guid: f7491bc024d4e4f1f9a6dd7f09558029, type: 3}
+  narration: {fileID: 2082765787}
 --- !u!64 &2082765790
 MeshCollider:
   m_ObjectHideFlags: 0
