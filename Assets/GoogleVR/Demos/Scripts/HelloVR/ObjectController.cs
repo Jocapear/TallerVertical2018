@@ -22,16 +22,13 @@ namespace GoogleVR.HelloVR {
     public GameObject player;
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
-    public Material miGazedAtMaterial;
+    public AudioClip narrationClip;
+    public AudioSource narration;
 
     void Start() {
       startingPosition = transform.localPosition;
       renderer = GetComponent<Renderer>();
       SetGazedAt(false);
-    }
-    public void Dragged(bool gazedAt)
-    {
-        renderer.material = gazedAt ? miGazedAtMaterial : gazedAtMaterial;
     }
 
     public void SetGazedAt(bool gazedAt) {
@@ -72,9 +69,12 @@ namespace GoogleVR.HelloVR {
     public void TeleportRandomly() {
       // Pick a random sibling, move them somewhere random, activate them,
       // deactivate ourself.
+
       //Para teletransportar
       player.transform.position = this.transform.position;
-      int sibIdx = transform.GetSiblingIndex();
+      //Play audio at telport
+      narration.PlayOneShot(narrationClip);
+      /*int sibIdx = transform.GetSiblingIndex();
       int numSibs = transform.parent.childCount;
       sibIdx = (sibIdx + Random.Range(1, numSibs)) % numSibs;
       GameObject randomSib = transform.parent.GetChild(sibIdx).gameObject;
@@ -92,15 +92,14 @@ namespace GoogleVR.HelloVR {
       randomSib.transform.localPosition = newPos;
 
       randomSib.SetActive(true);
-      gameObject.SetActive(false);
+      gameObject.SetActive(false);*/
       SetGazedAt(false);
-      Debug.Log(this.transform.position.z);
      }
         IEnumerator Stared()
     {
             while (true)
             {
-                yield return new WaitForSeconds(3);
+                yield return new WaitForSeconds(2);
                 TeleportRandomly();
             }           
     }
