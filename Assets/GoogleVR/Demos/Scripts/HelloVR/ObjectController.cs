@@ -19,7 +19,7 @@ namespace GoogleVR.HelloVR {
     public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
     private Renderer renderer;
-
+    public GameObject player;
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
     public Material miGazedAtMaterial;
@@ -72,6 +72,8 @@ namespace GoogleVR.HelloVR {
     public void TeleportRandomly() {
       // Pick a random sibling, move them somewhere random, activate them,
       // deactivate ourself.
+      //Para teletransportar
+      player.transform.position = this.transform.position;
       int sibIdx = transform.GetSiblingIndex();
       int numSibs = transform.parent.childCount;
       sibIdx = (sibIdx + Random.Range(1, numSibs)) % numSibs;
@@ -92,8 +94,9 @@ namespace GoogleVR.HelloVR {
       randomSib.SetActive(true);
       gameObject.SetActive(false);
       SetGazedAt(false);
-    }
-    IEnumerator Stared()
+      Debug.Log(this.transform.position.z);
+     }
+        IEnumerator Stared()
     {
             while (true)
             {
