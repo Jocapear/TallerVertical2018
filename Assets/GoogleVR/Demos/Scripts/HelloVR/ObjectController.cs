@@ -15,42 +15,38 @@
 namespace GoogleVR.HelloVR {
     using System.Collections;
     using UnityEngine;
-
     [RequireComponent(typeof(Collider))]
-  public class ObjectController : MonoBehaviour {
+    public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
     private Renderer renderer;
 
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
+    public Material miGazedAtMaterial;
 
     void Start() {
       startingPosition = transform.localPosition;
       renderer = GetComponent<Renderer>();
       SetGazedAt(false);
     }
-
-    IEnumerator Test()
+    public void Dragged(bool gazedAt)
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(2.5f);
-            Debug.Log("Watching");
-            TeleportRandomly();
-            Debug.Log("Poof");
-        }
+        renderer.material = gazedAt ? miGazedAtMaterial : gazedAtMaterial;
     }
 
     public void SetGazedAt(bool gazedAt) {
-        if (gazedAt){
-            StartCoroutine("Test");
-        }else{
-            StopCoroutine("Test");
-        }
-        if (inactiveMaterial != null && gazedAtMaterial != null) {
-            renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;  
-            return;
-        }
+            if (gazedAt)
+            {
+                StartCoroutine("Stared");
+            }
+            else
+            {
+                StopCoroutine("Stared");
+            }
+      if (inactiveMaterial != null && gazedAtMaterial != null) {
+        renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
+        return;
+      }
     }
 
     public void Reset() {
@@ -96,6 +92,14 @@ namespace GoogleVR.HelloVR {
       randomSib.SetActive(true);
       gameObject.SetActive(false);
       SetGazedAt(false);
+    }
+    IEnumerator Stared()
+    {
+            while (true)
+            {
+                yield return new WaitForSeconds(3);
+                TeleportRandomly();
+            }           
     }
   }
 }
