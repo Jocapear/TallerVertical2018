@@ -17,11 +17,13 @@
     using UnityEngine;
     [RequireComponent(typeof(Collider))]
     public class SelectorController : MonoBehaviour {
+    public Material inactiveMaterial, gazedAtMaterial;
     private Vector3 startingPosition;
     private Renderer renderer;
     public bool side;
     void Start() {
- 
+        renderer = GetComponent<Renderer>();
+        SetGazedAt(false);
     }
 
     public void SetGazedAt(bool gazedAt) {
@@ -32,6 +34,11 @@
             else
             {
                 StopCoroutine("Stared");
+            }
+            if (inactiveMaterial != null && gazedAtMaterial != null)
+            {
+                renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
+                return;
             }
     }
 
