@@ -38,8 +38,8 @@ GameObject:
   - component: {fileID: 23459984653101010}
   - component: {fileID: 64124596024518592}
   - component: {fileID: 114586167461651634}
+  - component: {fileID: 114378424778642968}
   - component: {fileID: 82345603772236922}
-  - component: {fileID: 114827412346918174}
   m_Layer: 0
   m_Name: Icosahedron
   m_TagString: Untagged
@@ -61,7 +61,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f0c289c880b679a47b3c525028ca9ddb, type: 2}
+  - {fileID: 2100000, guid: 63d8a5866592d4240a7dfdc7ea0d9bde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182,6 +182,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114378424778642968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1590261713375798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7129cada475fe4baf4e2058037d0f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inactiveMaterial: {fileID: 2100000, guid: 63d8a5866592d4240a7dfdc7ea0d9bde, type: 2}
+  gazedAtMaterial: {fileID: 2100000, guid: 8d2eb1bd277f2cc429b826871d9c0114, type: 2}
+  side: 0
 --- !u!114 &114586167461651634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,7 +212,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114827412346918174}
+        - m_Target: {fileID: 114378424778642968}
           m_MethodName: SetGazedAt
           m_Mode: 6
           m_Arguments:
@@ -215,7 +229,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114827412346918174}
+        - m_Target: {fileID: 114378424778642968}
           m_MethodName: SetGazedAt
           m_Mode: 6
           m_Arguments:
@@ -232,7 +246,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114827412346918174}
+        - m_Target: {fileID: 114378424778642968}
           m_MethodName: selected
           m_Mode: 1
           m_Arguments:
@@ -297,20 +311,6 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &114827412346918174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1590261713375798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16194502892ab8443ba2b6c1849ed2ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inactiveMaterial: {fileID: 2100000, guid: f0c289c880b679a47b3c525028ca9ddb, type: 2}
-  gazedAtMaterial: {fileID: 2100000, guid: d598bca91a42145418d5c43edc6fe5bb, type: 2}
-  side: 0
 --- !u!224 &224165809058305550
 RectTransform:
   m_ObjectHideFlags: 1
@@ -327,7 +327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.85, y: 0.05}
+  m_AnchoredPosition: {x: -3.29, y: 0.05}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224320549587678162
@@ -337,7 +337,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1590261713375798}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.194}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 224165809058305550}
