@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="firebase_database_url" translatable="false">https://taller-vertical-2018.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">667096116474</string>
+  <string name="google_storage_bucket" translatable="false">taller-vertical-2018.appspot.com</string>
+  <string name="project_id" translatable="false">taller-vertical-2018</string>
+  <string name="google_api_key" translatable="false">AIzaSyAAjH8mGr7YpCSYnlMAnwXlw8mAjN3dj3Q</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAAjH8mGr7YpCSYnlMAnwXlw8mAjN3dj3Q</string>
+  <string name="google_app_id" translatable="false">1:667096116474:android:f88a5db7743eb03e</string>
+  <string name="default_web_client_id" translatable="false">667096116474-tf2158mvdn24lf71guaq4jfkpn183dmh.apps.googleusercontent.com</string>
+</resources>
