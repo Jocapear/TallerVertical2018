@@ -20,7 +20,7 @@ namespace GoogleVR.HelloVR {
     [RequireComponent(typeof(Collider))]
     public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
-    private Renderer renderer;
+    private new Renderer renderer;
     public GameObject player;
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
@@ -73,7 +73,7 @@ namespace GoogleVR.HelloVR {
       // deactivate ourself.
 
       //Para teletransportar
-      player.transform.position = this.transform.position;
+      player.transform.position = this.transform.position - new Vector3(1.85f,0,1.85f);
       text.text = player.transform.position.ToString() + " " + this.transform.position.ToString();
       Debug.Log(text.text);
       //Play audio at telport
@@ -100,13 +100,14 @@ namespace GoogleVR.HelloVR {
       gameObject.SetActive(false);*/
       SetGazedAt(false);
      }
-        IEnumerator Stared()
+
+    IEnumerator Stared()
     {
-            while (true)
-            {
-                yield return new WaitForSeconds(2);
-                TeleportRandomly();
-            }           
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+            TeleportRandomly();
+        }           
     }
   }
 }
