@@ -11,6 +11,8 @@ public class ScreenController : MonoBehaviour {
     string[] answersLeft;
     string[] answersRight;
     TextMesh textBox;
+    SelectorController ButtonLeft;
+    SelectorController ButtonRight;
     TextMesh textAnswerLeft;
     TextMesh textAnswerRight;
     int score;
@@ -20,9 +22,9 @@ public class ScreenController : MonoBehaviour {
     void Start() {
         // Set this before calling into the realtime database.
         index = 0;
-        questions = new string[5];
-        answersLeft = new string[5];
-        answersRight = new string[5];
+        questions = new string[1];
+        answersLeft = new string[1];
+        answersRight = new string[1];
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://taller-vertical-2018.firebaseio.com/");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         FirebaseDatabase.DefaultInstance.GetReference("Data").Child("ScoreQuestions").GetValueAsync().ContinueWith(task => {
@@ -32,26 +34,14 @@ public class ScreenController : MonoBehaviour {
                 Debug.Log("Error, task faulted");
 
                 questions[0] = "DataNotFound";
-                questions[1] = "DataNotFound";
-                questions[2] = "DataNotFound";
-                questions[3] = "DataNotFound";
-                questions[4] = "DataNotFound";
 
-                answersLeft[0] = "A";
-                answersLeft[1] = "A1";
-                answersLeft[2] = "Si";
-                answersLeft[3] = "Lel";
-                answersLeft[4] = "A";
+                answersLeft[0] = "DataNotFound";
 
-                answersRight[0] = "B";
-                answersRight[1] = "B1";
-                answersRight[2] = "B2";
-                answersRight[3] = "B3";
-                answersRight[4] = "B4";
+                answersRight[0] = "DataNotFound";
             }
             else if (task.IsCompleted)
             {
-                Debug.Log("Task completed");
+                Debug.Log("Data found");
                 DataSnapshot snapshot = task.Result;
                 // Do something with snapshot...
                 long childrenCount = snapshot.ChildrenCount;
@@ -64,13 +54,14 @@ public class ScreenController : MonoBehaviour {
                     string pregunta = "Question";
                     DataSnapshot value = snapshot.Child(pregunta + i).Child("Statement");
                     questions[i-1] = value.Value.ToString();
-                    Debug.Log(questions[i-1]);
+                    //Debug.Log(questions[i-1]);
                 }
-                Debug.Log("Acabado");
-                Debug.Log(questions[0]);
+                Debug.Log("Data retreived");
             }
         });
         //Initializing elements
+        ButtonLeft = transform.GetChild(3).GetChild(0).GetComponent<SelectorController>();
+        ButtonRight = transform.GetChild(4).GetChild(0).GetComponent<SelectorController>();
         StartCoroutine("wait");
         textBox = this.transform.GetChild(0).GetComponent<TextMesh>();
         textAnswerLeft = this.transform.GetChild(1).GetComponent<TextMesh>();
@@ -98,25 +89,43 @@ public class ScreenController : MonoBehaviour {
 
     public void answerRight()
     {
-        score--;
-        changeQuestion();
+        if (ButtonRight.on)
+        {
+            score--;
+            Debug.Log("Answered Right");
+            changeQuestion();
+        }
+        
     }
 
     public void answerLeft()
     {
-        score++;
-        changeQuestion();
+        if (ButtonLeft.on)
+        {
+            score++;
+            Debug.Log("Answered Left");
+            changeQuestion();
+        }
     }
 
     public void changeQuestion()
     {
+        
         index++;
         if (index < questions.Length)
         {
-            Debug.Log("AnsweredRight");
+            ButtonLeft.on = false;
+            ButtonRight.on = false;
+            ButtonLeft.StartCoroutine("Wait");
+            ButtonRight.StartCoroutine("Wait");
             textBox.text = questions[index];
             textAnswerLeft.text = answersLeft[index];
             textAnswerRight.text = answersRight[index];
+        }else if (index == questions.Length)
+        {
+            //Submit Score
+            //Change Scene
+
         }
     }
 }

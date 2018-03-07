@@ -195,6 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveMaterial: {fileID: 2100000, guid: f0c289c880b679a47b3c525028ca9ddb, type: 2}
   gazedAtMaterial: {fileID: 2100000, guid: d598bca91a42145418d5c43edc6fe5bb, type: 2}
+  turdedOffMaterial: {fileID: 2100000, guid: b674c2b0232ca6344ac8d277b5ed97c0, type: 2}
+  on: 0
   side: 0
 --- !u!114 &114586167461651634
 MonoBehaviour:

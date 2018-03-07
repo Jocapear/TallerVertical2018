@@ -17,13 +17,20 @@
     using UnityEngine;
     [RequireComponent(typeof(Collider))]
     public class SelectorController : MonoBehaviour {
-    public Material inactiveMaterial, gazedAtMaterial;
+    public Material inactiveMaterial, gazedAtMaterial, turdedOffMaterial;
     private Vector3 startingPosition;
     private Renderer renderer;
+    public bool on;
     public bool side;
-    void Start() {
+    void Awake()
+    {
         renderer = GetComponent<Renderer>();
+        on = false;
+        renderer.material = turdedOffMaterial;
+    }
+    void Start() {
         SetGazedAt(false);
+        StartCoroutine("Wait");
     }
 
     public void SetGazedAt(bool gazedAt) {
@@ -35,7 +42,7 @@
             {
                 StopCoroutine("Stared");
             }
-            if (inactiveMaterial != null && gazedAtMaterial != null)
+            if (inactiveMaterial != null && gazedAtMaterial != null && on)
             {
                 renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
                 return;
@@ -52,31 +59,6 @@
 #endif  // !UNITY_EDITOR
     }
 
-    public void TeleportRandomly() {
-      // Pick a random sibling, move them somewhere random, activate them,
-      // deactivate ourself.
-      int sibIdx = transform.GetSiblingIndex();
-      int numSibs = transform.parent.childCount;
-      sibIdx = (sibIdx + Random.Range(1, numSibs)) % numSibs;
-      GameObject randomSib = transform.parent.GetChild(sibIdx).gameObject;
-
-      // Move to random new location ±100º horzontal.
-      Vector3 direction = Quaternion.Euler(
-          0,
-          Random.Range(-90, 90),
-          0) * Vector3.forward;
-      // New location between 1.5m and 3.5m.
-      float distance = 2 * Random.value + 1.5f;
-      Vector3 newPos = direction * distance;
-      // Limit vertical position to be fully in the room.
-      newPos.y = Mathf.Clamp(newPos.y, -1.2f, 4f);
-      randomSib.transform.localPosition = newPos;
-
-      randomSib.SetActive(true);
-      gameObject.SetActive(false);
-      SetGazedAt(false);
-    }
-
     public void selected()
     {
         if (side)
@@ -90,10 +72,18 @@
     }
     IEnumerator Stared()
     {
-            while (true)
+            while (true && on)
             {
                 yield return new WaitForSeconds(3);
                 selected();
             }           
+    }
+
+    IEnumerator Wait()
+    {
+        renderer.material = turdedOffMaterial;
+        yield return new WaitForSeconds(3);
+        this.on = true;
+        renderer.material = inactiveMaterial;
     }
   }
