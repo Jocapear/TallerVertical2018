@@ -76,12 +76,12 @@ public class ScreenController : MonoBehaviour {
                 scoresRight = new int[totalQuestionSize];
                 for(int i = 0; i < subjectQuestionSize; i++)
                 {
-                    Debug.Log("Yupiii!!1!1!!11");
+                    //Debug.Log("Yupiii!!1!1!!11");
                     questions[i] = snapshot.Child("Question" + i).Child("Statement").Value.ToString();
-                    Debug.Log("Yupiii!!1!1!!11");
+                    //Debug.Log("Yupiii!!1!1!!11");
                     answersLeft[i] = snapshot.Child("Question" + i).Child("Options").Child("a").Value.ToString();
                     playerAnswersL[i] = answersLeft[i];
-                    Debug.Log("Yupiii!!1!1!!11");
+                    //Debug.Log("Yupiii!!1!1!!11");
                     answersRight[i] = snapshot.Child("Question" + i).Child("Options").Child("b").Value.ToString();
                     playerAnswersR[i] = answersRight[i];
                     Debug.Log("Yupiii!!1!1!!11");
@@ -168,51 +168,89 @@ public class ScreenController : MonoBehaviour {
         while (passed)
         {
             audioSource.PlayOneShot(arrayAudios[0]);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(48);
             passed = false;
         }
         textBox.text = questions[index];
         textAnswerLeft.text = answersLeft[index];
         textAnswerRight.text = answersRight[index];
-        audioSource.PlayOneShot(arrayAudios[1]);
+        audioSource.PlayOneShot(arrayAudios[4]);
 
     }
 
     public void answerRight()
     {
         if (ButtonRight.on)
-        {
-            if (index < subjectQuestionSize)
+        {          
+            switch (index)
             {
-                switch (index)
-                {
-                    case 0:
-                        //Female
-                        age = playerAnswersR[index];
-                        audioSource.PlayOneShot(arrayAudios[3]);
-                        break;
-                    case 1:
-                        //Adult
-                        gender = playerAnswersR[index];
-                        System.Random rnd = new System.Random();
-                        audioSource.PlayOneShot(arrayAudios[rnd.Next(7, 9)]);
-                        break;
-                    case 2:
-                        //Life gives me less than necessary
-                        lifestyle = playerAnswersR[index];
-                        audioSource.PlayOneShot(arrayAudios[2]);
-                        break;
-                    case 3:
-                        //No, not responsible
-                        responsible = playerAnswersR[index];
-                        audioSource.PlayOneShot(arrayAudios[16]);
-                        break;
-                }
+                case 0:
+                    //Adult
+                    age = playerAnswersR[index];
+                    System.Random rnd = new System.Random();
+                    audioSource.PlayOneShot(arrayAudios[rnd.Next(7, 9)]);
+                    break;
+                case 1:                        
+                    //Female
+                    gender = playerAnswersR[index];
+                    audioSource.PlayOneShot(arrayAudios[3]);
+                    break;
+                case 2:
+                    //Life gives me less than necessary
+                    lifestyle = playerAnswersR[index];
+                    audioSource.PlayOneShot(arrayAudios[2]);
+                    break;
+                case 3:
+                    //No, not responsible
+                    responsible = playerAnswersR[index];
+                    audioSource.PlayOneShot(arrayAudios[16]);
+                    break;
+                case 4:
+                    //HMMMM
+                    audioSource.PlayOneShot(arrayAudios[23]);
+                    break;
+                case 5:
+                    //Nice
+                    audioSource.PlayOneShot(arrayAudios[36]);
+                    break;
+                case 6:
+                    //PAREC NO HABER RESPUESTA
+                    break;
+                case 7:
+                    //PARECE NO HABER RESPUESTA
+                    break;
+                case 8:
+                    //Primitive life
+                    audioSource.PlayOneShot(arrayAudios[31]);
+                    break;
+                case 9:
+                    //Booring
+                    audioSource.PlayOneShot(arrayAudios[39]);
+                    break;
+                case 10:
+                    //That is what i want in my team
+                    audioSource.PlayOneShot(arrayAudios[42]);
+                    break;
+                case 11:
+                    //Meh
+                    audioSource.PlayOneShot(arrayAudios[45]);
+                    break;
+                case 12:
+                    //lose extra weight
+                    audioSource.PlayOneShot(arrayAudios[54]);
+                    break;
+                case 13:
+                    //Well
+                    audioSource.PlayOneShot(arrayAudios[50]);
+                    break;
+                case 14:
+                    //Really
+                    audioSource.PlayOneShot(arrayAudios[47]);
+                    break;
             }
             changeQuestion();
             score += scoresRight[index-1];
-            Debug.Log("Answered Right: "+ scoresRight[index-1]);
-            
+            Debug.Log("Answered Right: "+ scoresRight[index-1]);            
         }
         
     }
@@ -221,33 +259,74 @@ public class ScreenController : MonoBehaviour {
     {
         if (ButtonLeft.on)
         {
-            if (index - 1 < subjectQuestionSize)
+           
+            switch (index)
             {
-                switch (index)
-                {
-                    case 0:
-                        //Male
-                        age = playerAnswersL[index];
-                        audioSource.PlayOneShot(arrayAudios[2]);
-                        break;
-                    case 1:
-                        //Young
-                        gender = playerAnswersL[index];
-                        System.Random rnd = new System.Random();
-                        audioSource.PlayOneShot(arrayAudios[rnd.Next(5, 7)]);
-                        break;
-                    case 2:
-                        //Life gives more than necessary
-                        lifestyle = playerAnswersL[index];
-                        System.Random random = new System.Random();
-                        audioSource.PlayOneShot(arrayAudios[random.Next(11, 13)]);
-                        break;
-                    case 3:
-                        //Yes, im responsible
-                        responsible = playerAnswersL[index];
-                        audioSource.PlayOneShot(arrayAudios[15]);
-                        break;
-                }
+                case 0:
+                    //Young
+                    age = playerAnswersL[index];
+                    System.Random rnd = new System.Random();
+                    audioSource.PlayOneShot(arrayAudios[rnd.Next(5, 7)]);
+                    break;
+                case 1:
+                    //Male
+                    gender = playerAnswersL[index];
+                    audioSource.PlayOneShot(arrayAudios[2]);        
+                    break;
+                case 2:
+                    //Life gives more than necessary
+                    lifestyle = playerAnswersL[index];
+                    System.Random random = new System.Random();
+                    audioSource.PlayOneShot(arrayAudios[random.Next(11, 13)]);
+                    break;
+                case 3:
+                    //Yes, im responsible
+                    responsible = playerAnswersL[index];
+                    audioSource.PlayOneShot(arrayAudios[15]);
+                    break;
+                case 4:
+                    //Ohh what a surprise
+                    audioSource.PlayOneShot(arrayAudios[22]);
+                    break;
+                case 5:
+                    //Lazy
+                    System.Random random2 = new System.Random();
+                    audioSource.PlayOneShot(arrayAudios[random2.Next(34, 36)]); //Audio del 35 o 36
+                    break;
+                case 6:
+                    // PARECE NO HABER RESPUESTA
+                    break;
+                case 7:
+                    // PARECE NO HABER RESPUESTA
+                    break;
+                case 8:
+                    //AWWW my hero
+                    audioSource.PlayOneShot(arrayAudios[30]);
+                    break;
+                case 9:
+                    //If you have one maybe
+                    audioSource.PlayOneShot(arrayAudios[38]);
+                    break;
+                case 10:
+                    //Millenials
+                    audioSource.PlayOneShot(arrayAudios[41]);
+                    break;
+                case 11:
+                    //Hopefully
+                    audioSource.PlayOneShot(arrayAudios[44]);
+                    break;
+                case 12:
+                    //Lose estra weight
+                    audioSource.PlayOneShot(arrayAudios[54]);
+                    break;
+                case 13:
+                    //Stingy
+                    audioSource.PlayOneShot(arrayAudios[51]);
+                    break;
+                case 14:
+                    //Really
+                    audioSource.PlayOneShot(arrayAudios[47]);
+                    break;
             }
             changeQuestion();
             Debug.Log("Answered Left: " + scoresLeft[index-1]);
@@ -267,22 +346,7 @@ public class ScreenController : MonoBehaviour {
             textBox.text = questions[index];
             textAnswerLeft.text = answersLeft[index];
             textAnswerRight.text = answersRight[index];
-            switch (index)
-            {
-                case 1:
-                    //Ask about age
-                    audioSource.PlayOneShot(arrayAudios[4]);
-                    break;
-                case 2:
-                    //Ask about lifestyle
-                    audioSource.PlayOneShot(arrayAudios[9]);
-                    break;
-                case 3:
-                    //Ask about responsible
-                    audioSource.PlayOneShot(arrayAudios[13]);
-                    audioSource.PlayOneShot(arrayAudios[14]);
-                    break;
-            }
+            StartCoroutine("Ask");
         }
         else if (index == questions.Length)
         {
@@ -307,7 +371,98 @@ public class ScreenController : MonoBehaviour {
         string key = FirebaseDatabase.DefaultInstance.GetReference("Data").Child("Users").Push().Key;
         FirebaseDatabase.DefaultInstance.GetReference("Data").Child("Users").Child(key).SetRawJsonValueAsync(json);
     }
+    IEnumerator Ask()
+    {
+        yield return new WaitForSeconds(5);
+        switch (index)
+        {
+            case 1:
+                //Ask about age
+                audioSource.PlayOneShot(arrayAudios[1]);
+                break;
+            case 2:
+                //Ask about lifestyle
+                audioSource.PlayOneShot(arrayAudios[9]);
+                break;
+            case 3:
+                //Ask about responsible
+                audioSource.PlayOneShot(arrayAudios[13]); 
+                audioSource.PlayOneShot(arrayAudios[14]);
+                break;
+            case 4:
+                //Clean energy
+                StartCoroutine("BeginQuestionary");
+                break;
+            case 5:
+                //Kind of transport do you use the most
+                audioSource.PlayOneShot(arrayAudios[33]);
+                break;
+                
+            case 6:
+                //lighning bill
+                audioSource.PlayOneShot(arrayAudios[24]);
+                break;
+               
+            case 7:
+                //DO you turn off the lights
+                audioSource.PlayOneShot(arrayAudios[26]);
+                break;
+                
+            case 8:
+                //Improvements do yous see at home
+                audioSource.PlayOneShot(arrayAudios[28]);
+                break;
+
+            case 9:
+                //What would you prefer
+                audioSource.PlayOneShot(arrayAudios[40]);
+                break;
+            case 10:
+                //Which one would you use
+                audioSource.PlayOneShot(arrayAudios[37]);
+                break;
+            case 11:
+                //How do you think the energy is being produced
+                audioSource.PlayOneShot(arrayAudios[43]);
+                break;
+            case 12:
+                //Charge phone by running
+                audioSource.PlayOneShot(arrayAudios[53]);
+                break;
+            case 13:
+                //Why do you buy the lighbulbs in home
+                audioSource.PlayOneShot(arrayAudios[49]);
+                break;
+            case 14:
+                //Do you care about using clean energy
+                audioSource.PlayOneShot(arrayAudios[46]);
+                break;
+            case 15:
+                //Getting sick
+                audioSource.PlayOneShot(arrayAudios[48]);
+                StartCoroutine("PlayLastAudio");
+                break;
+        }
+    }
+    IEnumerator PlayLastAudio()
+    {
+        yield return new WaitForSeconds(5);
+        audioSource.PlayOneShot(arrayAudios[25]);
+    }
+
+    IEnumerator BeginQuestionary()
+    {
+        audioSource.PlayOneShot(arrayAudios[17]);
+        yield return new WaitForSeconds(11);
+        audioSource.PlayOneShot(arrayAudios[18]);
+        yield return new WaitForSeconds(3);
+        audioSource.PlayOneShot(arrayAudios[19]);
+        yield return new WaitForSeconds(16);
+        audioSource.PlayOneShot(arrayAudios[21]);
+    }
 }
+
+
 
 class User
 {
