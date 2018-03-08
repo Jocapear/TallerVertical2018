@@ -168,7 +168,7 @@ public class ScreenController : MonoBehaviour {
         while (passed)
         {
             audioSource.PlayOneShot(arrayAudios[0]);
-            yield return new WaitForSeconds(7);
+            yield return new WaitForSeconds(3);
             passed = false;
         }
         textBox.text = questions[index];

@@ -30,7 +30,7 @@
     }
     void Start() {
         SetGazedAt(false);
-        StartCoroutine("Wait");
+        StartCoroutine("Wait2");
     }
 
     public void SetGazedAt(bool gazedAt) {
@@ -86,4 +86,11 @@
         this.on = true;
         renderer.material = inactiveMaterial;
     }
-  }
+    IEnumerator Wait2()
+    {
+        renderer.material = turdedOffMaterial;
+        yield return new WaitForSeconds(3);
+        this.on = true;
+        renderer.material = inactiveMaterial;
+    }
+}
