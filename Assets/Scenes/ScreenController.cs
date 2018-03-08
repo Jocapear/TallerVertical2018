@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class ScreenController : MonoBehaviour {
     private DatabaseReference reference;
+    public AudioClip[] arrayAudios;
+    private AudioSource audioSource;
     string age;
     string gender;
     string lifestyle;
@@ -94,6 +96,8 @@ public class ScreenController : MonoBehaviour {
         //Initializing elements
         ButtonLeft = transform.GetChild(3).GetChild(0).GetComponent<SelectorController>();
         ButtonRight = transform.GetChild(4).GetChild(0).GetComponent<SelectorController>();
+        audioSource = this.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(arrayAudios[0]);
         StartCoroutine("wait");
         textBox = this.transform.GetChild(0).GetComponent<TextMesh>();
         textAnswerLeft = this.transform.GetChild(1).GetComponent<TextMesh>();
@@ -125,7 +129,7 @@ public class ScreenController : MonoBehaviour {
                 long childrenCount = snapshot.ChildrenCount;
                 Debug.Log("There are " + childrenCount + " questions");
                 Debug.Log("Viniendo de: " + (subjectQuestionSize));
-                for (int i = 1; i < childrenCount; i++)
+                for (int i = 1; i <= childrenCount; i++)
                 {
                     DataSnapshot pregunta = snapshot.Child("Question" + i);
                     DataSnapshot statement = pregunta.Child("Statement");
