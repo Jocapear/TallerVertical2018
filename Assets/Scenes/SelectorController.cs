@@ -82,14 +82,14 @@
     IEnumerator Wait()
     {
         renderer.material = turdedOffMaterial;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         this.on = true;
         renderer.material = inactiveMaterial;
     }
     IEnumerator Wait2()
     {
         renderer.material = turdedOffMaterial;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(48);
         this.on = true;
         renderer.material = inactiveMaterial;
     }
