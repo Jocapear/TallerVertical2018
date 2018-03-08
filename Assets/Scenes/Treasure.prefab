@@ -61,7 +61,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f0c289c880b679a47b3c525028ca9ddb, type: 2}
+  - {fileID: 2100000, guid: 63d8a5866592d4240a7dfdc7ea0d9bde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -190,12 +190,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1590261713375798}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16194502892ab8443ba2b6c1849ed2ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c7129cada475fe4baf4e2058037d0f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inactiveMaterial: {fileID: 2100000, guid: f0c289c880b679a47b3c525028ca9ddb, type: 2}
-  gazedAtMaterial: {fileID: 2100000, guid: d598bca91a42145418d5c43edc6fe5bb, type: 2}
-  turdedOffMaterial: {fileID: 2100000, guid: b674c2b0232ca6344ac8d277b5ed97c0, type: 2}
+  inactiveMaterial: {fileID: 2100000, guid: 63d8a5866592d4240a7dfdc7ea0d9bde, type: 2}
+  gazedAtMaterial: {fileID: 2100000, guid: 8d2eb1bd277f2cc429b826871d9c0114, type: 2}
+  turdedOffMaterial: {fileID: 2100000, guid: a04aa3c10683d364bbdea29bf2185e0a, type: 2}
   on: 0
   side: 0
 --- !u!114 &114586167461651634

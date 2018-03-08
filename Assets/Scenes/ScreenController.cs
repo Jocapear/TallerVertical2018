@@ -5,14 +5,21 @@ using Firebase;
 using Firebase.Unity.Editor;
 using Firebase.Database;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ScreenController : MonoBehaviour {
     private DatabaseReference reference;
+    string age;
+    string gender;
+    string lifestyle;
+    string responsible;
     string[] questions;
     string[] answersLeft;
     string[] answersRight;
     int[] scoresLeft;
     int[] scoresRight;
+    string[] playerAnswersL;
+    string[] playerAnswersR;
     TextMesh textBox;
     SelectorController ButtonLeft;
     SelectorController ButtonRight;
@@ -20,6 +27,7 @@ public class ScreenController : MonoBehaviour {
     TextMesh textAnswerRight;
     int score;
     int index;
+    long subjectQuestionSize = 0;
 
     // Use this for initialization
     void Start() {
@@ -30,8 +38,70 @@ public class ScreenController : MonoBehaviour {
         scoresLeft = new int[1];
         answersRight = new string[1];
         scoresRight = new int[1];
+        playerAnswersL = new string[1];
+        playerAnswersR = new string[1];
         FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://taller-vertical-2018.firebaseio.com/");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        long totalQuestionSize = 0;
+        FirebaseDatabase.DefaultInstance.GetReference("Data").Child("ScoreQuestions").GetValueAsync().ContinueWith(task => {
+            if (task.IsFaulted)
+            {
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                totalQuestionSize += snapshot.ChildrenCount;
+                Debug.Log("Question Size: " + totalQuestionSize);
+            }
+        });
+
+        FirebaseDatabase.DefaultInstance.GetReference("Data").Child("SubjectQuestions").GetValueAsync().ContinueWith(task => {
+            if (task.IsFaulted)
+            {
+            }
+            else if (task.IsCompleted)
+            {
+                Debug.Log("Data found");
+                DataSnapshot snapshot = task.Result;
+                subjectQuestionSize = snapshot.ChildrenCount;
+                playerAnswersL = new string[subjectQuestionSize];
+                playerAnswersR = new string[subjectQuestionSize];
+                totalQuestionSize += subjectQuestionSize;
+                questions = new string[totalQuestionSize];
+                answersLeft = new string[totalQuestionSize];
+                answersRight = new string[totalQuestionSize];
+                scoresLeft = new int[totalQuestionSize];
+                scoresRight = new int[totalQuestionSize];
+                for(int i = 0; i < subjectQuestionSize; i++)
+                {
+                    Debug.Log("Yupiii!!1!1!!11");
+                    questions[i] = snapshot.Child("Question" + i).Child("Statement").Value.ToString();
+                    Debug.Log("Yupiii!!1!1!!11");
+                    answersLeft[i] = snapshot.Child("Question" + i).Child("Options").Child("a").Value.ToString();
+                    playerAnswersL[i] = answersLeft[i];
+                    Debug.Log("Yupiii!!1!1!!11");
+                    answersRight[i] = snapshot.Child("Question" + i).Child("Options").Child("b").Value.ToString();
+                    playerAnswersR[i] = answersRight[i];
+                    Debug.Log("Yupiii!!1!1!!11");
+                    scoresLeft[i] = 0;
+                    scoresRight[i] = 0;
+                    Debug.Log("i: " + i);
+                }
+                Debug.Log("Yupiii!!1!1!!11");
+                this.readScoreQuestions();
+            }
+        });
+        //Initializing elements
+        ButtonLeft = transform.GetChild(3).GetChild(0).GetComponent<SelectorController>();
+        ButtonRight = transform.GetChild(4).GetChild(0).GetComponent<SelectorController>();
+        StartCoroutine("wait");
+        textBox = this.transform.GetChild(0).GetComponent<TextMesh>();
+        textAnswerLeft = this.transform.GetChild(1).GetComponent<TextMesh>();
+        textAnswerRight = this.transform.GetChild(2).GetComponent<TextMesh>();
+    }
+
+    private void readScoreQuestions()
+    {
         FirebaseDatabase.DefaultInstance.GetReference("Data").Child("ScoreQuestions").GetValueAsync().ContinueWith(task => {
             if (task.IsFaulted)
             {
@@ -53,12 +123,8 @@ public class ScreenController : MonoBehaviour {
                 DataSnapshot snapshot = task.Result;
                 // Do something with snapshot...
                 long childrenCount = snapshot.ChildrenCount;
-                questions = new string[childrenCount];
-                answersLeft = new string[childrenCount];
-                answersRight = new string[childrenCount];
-                scoresLeft = new int[childrenCount];
-                scoresRight = new int[childrenCount];
                 Debug.Log("There are " + childrenCount + " questions");
+                Debug.Log("Viniendo de: " + (subjectQuestionSize));
                 for (int i = 1; i < childrenCount; i++)
                 {
                     DataSnapshot pregunta = snapshot.Child("Question" + i);
@@ -66,38 +132,31 @@ public class ScreenController : MonoBehaviour {
                     DataSnapshot respuestaL = pregunta.Child("Options").Child("OptionA");
                     DataSnapshot respuestaR = pregunta.Child("Options").Child("OptionB");
 
-                    questions[i-1] = statement.Value.ToString();
-                    Debug.Log("Data saved: " + questions[i-1]);
-                    answersLeft[i-1] = respuestaL.Child("Statement").Value.ToString();
-                    Debug.Log("Data saved: " + answersLeft[i - 1]);
-                    answersRight[i-1] = respuestaR.Child("Statement").Value.ToString();
-                    Debug.Log("Data saved: " + answersRight[i - 1]);
+                    questions[i + subjectQuestionSize - 1] = statement.Value.ToString();
+                    Debug.Log("Data saved: " + questions[i + subjectQuestionSize - 1]);
+                    answersLeft[i + subjectQuestionSize - 1] = respuestaL.Child("Statement").Value.ToString();
+                    Debug.Log("Data saved: " + answersLeft[i + subjectQuestionSize - 1]);
+                    answersRight[i + subjectQuestionSize - 1] = respuestaR.Child("Statement").Value.ToString();
+                    Debug.Log("Data saved: " + answersRight[i + subjectQuestionSize - 1]);
 
                     int scoreL = 0;
                     Int32.TryParse(respuestaL.Child("Score").Value.ToString(), out scoreL);
-                    scoresLeft[i - 1] = scoreL;
-                    Debug.Log("Data saved: " + scoresLeft[i - 1]);
+                    scoresLeft[i + subjectQuestionSize - 1] = scoreL;
+                    Debug.Log("Data saved: " + scoresLeft[i + subjectQuestionSize - 1]);
 
                     int scoreR = 0;
                     Int32.TryParse(respuestaR.Child("Score").Value.ToString(), out scoreR);
-                    scoresRight[i - 1] = scoreR;
-                    Debug.Log("Data saved: "+scoresRight[i - 1]);
+                    scoresRight[i + subjectQuestionSize - 1] = scoreR;
+                    Debug.Log("Data saved: " + scoresRight[i + subjectQuestionSize - 1]);
                 }
                 Debug.Log("Data retreived");
             }
         });
-        //Initializing elements
-        ButtonLeft = transform.GetChild(3).GetChild(0).GetComponent<SelectorController>();
-        ButtonRight = transform.GetChild(4).GetChild(0).GetComponent<SelectorController>();
-        StartCoroutine("wait");
-        textBox = this.transform.GetChild(0).GetComponent<TextMesh>();
-        textAnswerLeft = this.transform.GetChild(1).GetComponent<TextMesh>();
-        textAnswerRight = this.transform.GetChild(2).GetComponent<TextMesh>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        Debug.Log(index);
 	}
 
     IEnumerator wait()
@@ -121,7 +180,24 @@ public class ScreenController : MonoBehaviour {
             changeQuestion();
             score += scoresRight[index-1];
             Debug.Log("Answered Right: "+ scoresRight[index-1]);
-            
+            if(index-1 < subjectQuestionSize)
+            {
+                switch (index - 1)
+                {
+                    case 0:
+                        age = playerAnswersR[index - 1];
+                        break;
+                    case 1:
+                        gender = playerAnswersR[index - 1];
+                        break;
+                    case 2:
+                        lifestyle = playerAnswersR[index - 1];
+                        break;
+                    case 3:
+                        responsible = playerAnswersR[index - 1];
+                        break;
+                }
+            }
         }
         
     }
@@ -133,6 +209,24 @@ public class ScreenController : MonoBehaviour {
             changeQuestion();
             Debug.Log("Answered Left: " + scoresLeft[index-1]);
             score += scoresLeft[index-1];
+            if (index - 1 < subjectQuestionSize)
+            {
+                switch (index - 1)
+                {
+                    case 0:
+                        age = playerAnswersL[index - 1];
+                        break;
+                    case 1:
+                        gender = playerAnswersL[index - 1];
+                        break;
+                    case 2:
+                        lifestyle = playerAnswersL[index - 1];
+                        break;
+                    case 3:
+                        responsible = playerAnswersL[index - 1];
+                        break;
+                }
+            }
         }
     }
 
@@ -152,9 +246,47 @@ public class ScreenController : MonoBehaviour {
         }else if (index == questions.Length)
         {
             //Submit Score
+            this.writeNewUser(gender, age, lifestyle, responsible, score.ToString());
             //Change Scene
-            Debug.Log(score);   
-
+            if (score > 7)
+            {
+                SceneManager.LoadScene("Good_Park");
+            }
+            else
+            {
+                SceneManager.LoadScene("Bad_Park");
+            }
+            Debug.Log(score);
         }
+    }
+    private void writeNewUser(string gender, string age, string lifestyle, string responsible, string score)
+    {
+        User user = new User(gender, age, lifestyle, responsible, score);
+        string json = JsonUtility.ToJson(user);
+        string key = FirebaseDatabase.DefaultInstance.GetReference("Data").Child("Users").Push().Key;
+        FirebaseDatabase.DefaultInstance.GetReference("Data").Child("Users").Child(key).SetRawJsonValueAsync(json);
+    }
+}
+
+class User
+{
+    public string gender;
+    public string age;
+    public string lifestyle;
+    public string responsible;
+    public string score;
+
+
+    public User()
+    {
+    }
+
+    public User(string gender, string age, string lifestyle, string responsible, string score)
+    {
+        this.gender = gender;
+        this.age = age;
+        this.lifestyle = lifestyle;
+        this.responsible = responsible;
+        this.score = score;
     }
 }
