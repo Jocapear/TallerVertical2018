@@ -97,7 +97,6 @@ public class ScreenController : MonoBehaviour {
         ButtonLeft = transform.GetChild(3).GetChild(0).GetComponent<SelectorController>();
         ButtonRight = transform.GetChild(4).GetChild(0).GetComponent<SelectorController>();
         audioSource = this.GetComponent<AudioSource>();
-        audioSource.PlayOneShot(arrayAudios[0]);
         StartCoroutine("wait");
         textBox = this.transform.GetChild(0).GetComponent<TextMesh>();
         textAnswerLeft = this.transform.GetChild(1).GetComponent<TextMesh>();
@@ -168,12 +167,14 @@ public class ScreenController : MonoBehaviour {
         bool passed = true;
         while (passed)
         {
-            yield return new WaitForSeconds(2f);
-            textBox.text = questions[index];
-            textAnswerLeft.text = answersLeft[index];
-            textAnswerRight.text = answersRight[index];
+            audioSource.PlayOneShot(arrayAudios[0]);
+            yield return new WaitForSeconds(7);
             passed = false;
         }
+        textBox.text = questions[index];
+        textAnswerLeft.text = answersLeft[index];
+        textAnswerRight.text = answersRight[index];
+        audioSource.PlayOneShot(arrayAudios[1]);
 
     }
 
@@ -181,27 +182,37 @@ public class ScreenController : MonoBehaviour {
     {
         if (ButtonRight.on)
         {
-            changeQuestion();
-            score += scoresRight[index-1];
-            Debug.Log("Answered Right: "+ scoresRight[index-1]);
-            if(index-1 < subjectQuestionSize)
+            if (index < subjectQuestionSize)
             {
-                switch (index - 1)
+                switch (index)
                 {
                     case 0:
-                        age = playerAnswersR[index - 1];
+                        //Female
+                        age = playerAnswersR[index];
+                        audioSource.PlayOneShot(arrayAudios[3]);
                         break;
                     case 1:
-                        gender = playerAnswersR[index - 1];
+                        //Adult
+                        gender = playerAnswersR[index];
+                        System.Random rnd = new System.Random();
+                        audioSource.PlayOneShot(arrayAudios[rnd.Next(7, 9)]);
                         break;
                     case 2:
-                        lifestyle = playerAnswersR[index - 1];
+                        //Life gives me less than necessary
+                        lifestyle = playerAnswersR[index];
+                        audioSource.PlayOneShot(arrayAudios[2]);
                         break;
                     case 3:
-                        responsible = playerAnswersR[index - 1];
+                        //No, not responsible
+                        responsible = playerAnswersR[index];
+                        audioSource.PlayOneShot(arrayAudios[16]);
                         break;
                 }
             }
+            changeQuestion();
+            score += scoresRight[index-1];
+            Debug.Log("Answered Right: "+ scoresRight[index-1]);
+            
         }
         
     }
@@ -209,34 +220,43 @@ public class ScreenController : MonoBehaviour {
     public void answerLeft()
     {
         if (ButtonLeft.on)
-        {        
-            changeQuestion();
-            Debug.Log("Answered Left: " + scoresLeft[index-1]);
-            score += scoresLeft[index-1];
+        {
             if (index - 1 < subjectQuestionSize)
             {
-                switch (index - 1)
+                switch (index)
                 {
                     case 0:
-                        age = playerAnswersL[index - 1];
+                        //Male
+                        age = playerAnswersL[index];
+                        audioSource.PlayOneShot(arrayAudios[2]);
                         break;
                     case 1:
-                        gender = playerAnswersL[index - 1];
+                        //Young
+                        gender = playerAnswersL[index];
+                        System.Random rnd = new System.Random();
+                        audioSource.PlayOneShot(arrayAudios[rnd.Next(5, 7)]);
                         break;
                     case 2:
-                        lifestyle = playerAnswersL[index - 1];
+                        //Life gives more than necessary
+                        lifestyle = playerAnswersL[index];
+                        System.Random random = new System.Random();
+                        audioSource.PlayOneShot(arrayAudios[random.Next(11, 13)]);
                         break;
                     case 3:
-                        responsible = playerAnswersL[index - 1];
+                        //Yes, im responsible
+                        responsible = playerAnswersL[index];
+                        audioSource.PlayOneShot(arrayAudios[15]);
                         break;
                 }
             }
+            changeQuestion();
+            Debug.Log("Answered Left: " + scoresLeft[index-1]);
+            score += scoresLeft[index-1];
         }
     }
 
     public void changeQuestion()
-    {
-        
+    { 
         index++;
         if (index < questions.Length)
         {
@@ -247,7 +267,24 @@ public class ScreenController : MonoBehaviour {
             textBox.text = questions[index];
             textAnswerLeft.text = answersLeft[index];
             textAnswerRight.text = answersRight[index];
-        }else if (index == questions.Length)
+            switch (index)
+            {
+                case 1:
+                    //Ask about age
+                    audioSource.PlayOneShot(arrayAudios[4]);
+                    break;
+                case 2:
+                    //Ask about lifestyle
+                    audioSource.PlayOneShot(arrayAudios[9]);
+                    break;
+                case 3:
+                    //Ask about responsible
+                    audioSource.PlayOneShot(arrayAudios[13]);
+                    audioSource.PlayOneShot(arrayAudios[14]);
+                    break;
+            }
+        }
+        else if (index == questions.Length)
         {
             //Submit Score
             this.writeNewUser(gender, age, lifestyle, responsible, score.ToString());
@@ -280,10 +317,8 @@ class User
     public string responsible;
     public string score;
 
-
     public User()
-    {
-    }
+    {}
 
     public User(string gender, string age, string lifestyle, string responsible, string score)
     {
