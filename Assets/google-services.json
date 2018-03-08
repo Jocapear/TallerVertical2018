@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "667096116474",
+    "firebase_url": "https://taller-vertical-2018.firebaseio.com",
+    "project_id": "taller-vertical-2018",
+    "storage_bucket": "taller-vertical-2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667096116474:android:f88a5db7743eb03e",
+        "android_client_info": {
+          "package_name": "com.Taller.Vertical"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667096116474-tf2158mvdn24lf71guaq4jfkpn183dmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjH8mGr7YpCSYnlMAnwXlw8mAjN3dj3Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
