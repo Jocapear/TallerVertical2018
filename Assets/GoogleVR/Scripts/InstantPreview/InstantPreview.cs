@@ -158,13 +158,13 @@ namespace Gvr.Internal {
       var sb = new StringBuilder(256);
       GetVersionString(sb, (uint)sb.Capacity);
       var localVersionName = sb.ToString();
-      Debug.Log("Instant Preview Version: " + localVersionName);
+      //Debug.Log("Instant Preview Version: " + localVersionName);
 
       // Tries to install Instant Preview apk if set to do so.
       if (InstallApkOnRun) {
         // Early outs if set to install but the apk can't be found.
         if (InstantPreviewApk == null) {
-          Debug.LogError("Trying to install Instant Preview apk but reference to InstantPreview.apk is broken.");
+          //Debug.LogError("Trying to install Instant Preview apk but reference to InstantPreview.apk is broken.");
           return;
         }
 

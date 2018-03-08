@@ -289,7 +289,7 @@ public class ScreenController : MonoBehaviour {
             //Submit Score
             this.writeNewUser(gender, age, lifestyle, responsible, score.ToString());
             //Change Scene
-            if (score > 7)
+            if (score > 6)
             {
                 SceneManager.LoadScene("Good_Park");
             }

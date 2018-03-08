@@ -71,9 +71,12 @@ namespace Gvr.Internal {
         long lastConnectionAttemptTime = DateTime.Now.Ticks;
         try {
           phoneConnect();
+#pragma warning disable CS0168 // Variable is declared but never used
         } catch(Exception e) {
+#pragma warning restore CS0168 // Variable is declared but never used
           if (lastConnectionAttemptWasSuccessful) {
-            Debug.LogWarningFormat("{0}\n{1}", e.Message, e.StackTrace);
+                     
+            //Debug.LogWarningFormat("{0}\n{1}", e.Message, e.StackTrace);
             // Suppress additional failures until we have successfully reconnected.
             lastConnectionAttemptWasSuccessful = false;
           }

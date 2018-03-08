@@ -19,7 +19,7 @@
     public class SelectorController : MonoBehaviour {
     public Material inactiveMaterial, gazedAtMaterial, turdedOffMaterial;
     private Vector3 startingPosition;
-    private Renderer renderer;
+    private new Renderer renderer;
     public bool on;
     public bool side;
     void Awake()
