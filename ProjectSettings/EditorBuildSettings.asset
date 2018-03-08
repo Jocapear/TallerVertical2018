@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/DarkRoom/DarkRoom.unity
     guid: e9c0b83867cf79640b753ab1d2df1dc4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Bad_Park_Textures/Bad_Park.unity
     guid: d4525b2b17664a045bace682a5267ad3
   - enabled: 1
