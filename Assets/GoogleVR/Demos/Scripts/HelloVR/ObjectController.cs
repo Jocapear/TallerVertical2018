@@ -13,16 +13,20 @@
 // limitations under the License.
 
 namespace GoogleVR.HelloVR {
-  using UnityEngine;
+    using System.Collections;
+    using UnityEngine;
+    using UnityEngine.UI;
 
-  [RequireComponent(typeof(Collider))]
-  public class ObjectController : MonoBehaviour {
+    [RequireComponent(typeof(Collider))]
+    public class ObjectController : MonoBehaviour {
     private Vector3 startingPosition;
-    private Renderer renderer;
-
+    private new Renderer renderer;
+    public GameObject player;
     public Material inactiveMaterial;
     public Material gazedAtMaterial;
-
+    public AudioClip narrationClip;
+    public AudioSource narration;
+    public Text text;
     void Start() {
       startingPosition = transform.localPosition;
       renderer = GetComponent<Renderer>();
@@ -30,6 +34,14 @@ namespace GoogleVR.HelloVR {
     }
 
     public void SetGazedAt(bool gazedAt) {
+            if (gazedAt)
+            {
+                StartCoroutine("Stared");
+            }
+            else
+            {
+                StopCoroutine("Stared");
+            }
       if (inactiveMaterial != null && gazedAtMaterial != null) {
         renderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
         return;
@@ -59,7 +71,15 @@ namespace GoogleVR.HelloVR {
     public void TeleportRandomly() {
       // Pick a random sibling, move them somewhere random, activate them,
       // deactivate ourself.
-      int sibIdx = transform.GetSiblingIndex();
+
+      //Para teletransportar
+      player.transform.position = this.transform.position - new Vector3(1.85f,0,1.85f);
+      text.text = player.transform.position.ToString() + " " + this.transform.position.ToString();
+      Debug.Log(text.text);
+      //Play audio at telport
+      narration.PlayOneShot(narrationClip);
+
+      /*int sibIdx = transform.GetSiblingIndex();
       int numSibs = transform.parent.childCount;
       sibIdx = (sibIdx + Random.Range(1, numSibs)) % numSibs;
       GameObject randomSib = transform.parent.GetChild(sibIdx).gameObject;
@@ -77,8 +97,17 @@ namespace GoogleVR.HelloVR {
       randomSib.transform.localPosition = newPos;
 
       randomSib.SetActive(true);
-      gameObject.SetActive(false);
+      gameObject.SetActive(false);*/
       SetGazedAt(false);
+     }
+
+    IEnumerator Stared()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+            TeleportRandomly();
+        }           
     }
   }
 }
