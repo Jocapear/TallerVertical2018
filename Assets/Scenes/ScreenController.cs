@@ -373,7 +373,7 @@ public class ScreenController : MonoBehaviour {
     }
     IEnumerator Ask()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
         switch (index)
         {
             case 1:
@@ -442,6 +442,7 @@ public class ScreenController : MonoBehaviour {
                 audioSource.PlayOneShot(arrayAudios[48]);
                 StartCoroutine("PlayLastAudio");
                 break;
+                yield return new WaitForSeconds(3);
         }
     }
     IEnumerator PlayLastAudio()
