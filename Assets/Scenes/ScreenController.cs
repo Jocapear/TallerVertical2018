@@ -10,7 +10,9 @@ using UnityEngine.SceneManagement;
 public class ScreenController : MonoBehaviour {
     private DatabaseReference reference;
     public AudioClip[] arrayAudios;
+    public AudioClip[] randomArrayAudios;
     private AudioSource audioSource;
+    public GameObject house;
     string age;
     string gender;
     string lifestyle;
@@ -175,6 +177,7 @@ public class ScreenController : MonoBehaviour {
         textAnswerLeft.text = answersLeft[index];
         textAnswerRight.text = answersRight[index];
         audioSource.PlayOneShot(arrayAudios[4]);
+        StartCoroutine("PlayRandomAudio");
 
     }
 
@@ -198,7 +201,7 @@ public class ScreenController : MonoBehaviour {
                 case 2:
                     //Life gives me less than necessary
                     lifestyle = playerAnswersR[index];
-                    audioSource.PlayOneShot(arrayAudios[2]);
+                    audioSource.PlayOneShot(arrayAudios[10]);
                     break;
                 case 3:
                     //No, not responsible
@@ -335,7 +338,8 @@ public class ScreenController : MonoBehaviour {
     }
 
     public void changeQuestion()
-    { 
+    {
+        StopCoroutine("PlayRandomAudio");
         index++;
         if (index < questions.Length)
         {
@@ -353,7 +357,7 @@ public class ScreenController : MonoBehaviour {
             //Submit Score
             this.writeNewUser(gender, age, lifestyle, responsible, score.ToString());
             //Change Scene
-            if (score > 6)
+            if (score > 8)
             {
                 SceneManager.LoadScene("Good_Park");
             }
@@ -373,7 +377,11 @@ public class ScreenController : MonoBehaviour {
     }
     IEnumerator Ask()
     {
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
         yield return new WaitForSeconds(4);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
         switch (index)
         {
             case 1:
@@ -391,7 +399,11 @@ public class ScreenController : MonoBehaviour {
                 break;
             case 4:
                 //Clean energy
+                ButtonLeft.on = false;
+                ButtonRight.on = false;
                 StartCoroutine("BeginQuestionary");
+                ButtonLeft.on = false;
+                ButtonRight.on = false;
                 break;
             case 5:
                 //Kind of transport do you use the most
@@ -442,7 +454,11 @@ public class ScreenController : MonoBehaviour {
                 audioSource.PlayOneShot(arrayAudios[48]);
                 StartCoroutine("PlayLastAudio");
                 break;
-                yield return new WaitForSeconds(3);
+        }
+        yield return new WaitForSeconds(3);
+        if(index != 4)
+        {
+            StartCoroutine("PlayRandomAudio");
         }
     }
     IEnumerator PlayLastAudio()
@@ -451,15 +467,50 @@ public class ScreenController : MonoBehaviour {
         audioSource.PlayOneShot(arrayAudios[25]);
     }
 
+    IEnumerator PlayRandomAudio()
+    {
+        yield return new WaitForSeconds(10);
+        System.Random randomIndex = new System.Random();
+        audioSource.PlayOneShot(randomArrayAudios[randomIndex.Next(0, randomArrayAudios.Length)]);
+    }
+
     IEnumerator BeginQuestionary()
     {
         audioSource.PlayOneShot(arrayAudios[17]);
-        yield return new WaitForSeconds(11);
-        audioSource.PlayOneShot(arrayAudios[18]);
         yield return new WaitForSeconds(3);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        yield return new WaitForSeconds(8);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        this.house.SetActive(true);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        audioSource.PlayOneShot(arrayAudios[18]);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        yield return new WaitForSeconds(3);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
         audioSource.PlayOneShot(arrayAudios[19]);
-        yield return new WaitForSeconds(16);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        yield return new WaitForSeconds(13);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        this.house.transform.GetChild(0).gameObject.SetActive(true);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        yield return new WaitForSeconds(4);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
         audioSource.PlayOneShot(arrayAudios[21]);
+        ButtonLeft.on = false;
+        ButtonRight.on = false;
+        yield return new WaitForSeconds(4);
+        ButtonLeft.on = true;
+        ButtonRight.on = true;
+        StartCoroutine("PlayRandomAudio");
     }
 }
 

@@ -70,6 +70,13 @@
         }
        
     }
+    void Update()
+    {
+        if (!this.on)
+        {
+            renderer.material = turdedOffMaterial;
+        }
+    }
     IEnumerator Stared()
     {
             while (true && on)
